@@ -43,7 +43,7 @@ jobs:
 
     # Run Terraform init for Main branch
     - name: Terraform Init for feature_AS127_dev_100 branch
-      id: init-main`
+      id: init-main
       if: github.ref == 'refs/heads/feature_AS127_dev_100'
       env:
         AZURE_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
