@@ -32,15 +32,6 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    # Log into Azure with OIDC integration if branch is feature_AS127_dev_100
-    - name: 'Az CLI login for feature_AS127_dev_100 branch' 
-      if: github.ref == 'refs/heads/feature_AS127_dev_100'
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.ARM_CLIENT_ID }}
-        tenant-id: ${{ secrets.ARM_TENANT_ID }}
-        subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-
     # Run Terraform init for Main branch
     - name: Terraform Init for feature_AS127_dev_100 branch
       id: init-main
