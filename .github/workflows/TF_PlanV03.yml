@@ -1,72 +1,84 @@
-name: 'Terraform-Plan-Infra-PlanV03'
+name: 'Push on Dev environment'
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - master
-      - 'feature/*'
-    paths:
-      - './**'
-      - '.github/workflows/TF_PlanV03.yml'
+      - feature_AS127_dev_100
 
 env:
-  WORKING_DIR: "./"
-  TF_VER: 1.4.6
-  TARGET_ENV: dev
-  BACKEND_FILE: provider.tf
-  #
-  TF_VAR_client_id: 'c1d00aec-4e92-4fae-88a7-1d68a129b074'
-  TF_VAR_subscription_id: '729672c5-d8c3-49fd-be05-c404781c9394'
-  TF_VAR_environment: 'dev'
+  TF_LOG: INFO
+  TF_INPUT: false
 
-  
+permissions:
+    id-token: write
+    contents: read
 
 jobs:
-  tf-plan:
-    timeout-minutes: ${{ fromJSON(vars.JOB_TIMEOUT_MINUTES_SHORT) }}
-    name: 'terraform: init,validate,plan'
+  terraform:
+    name: 'Terraform Push'
     runs-on: ubuntu-latest
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    # Use the Bash shell
     defaults:
       run:
         shell: bash
 
     steps:
-      # Checkout the repository to the GitHub Actions runner
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+    # Install the preferred version of Terraform CLI 
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: '${{ env.TF_VER }}'
+    # Log into Azure with OIDC integration if branch is main
+    - name: 'Az CLI login for Main branch' 
+      if: github.ref == 'refs/heads/main'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.ARM_CLIENT_ID }}
+        tenant-id: ${{ secrets.ARM_TENANT_ID }}
+        subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-      - name: Run> terraform init
-        run: |
-          cd "${{ env.WORKING_DIR}}"
-          terraform init -upgrade -input=false -reconfigure -backend-config="${{ env.TARGET_ENV }}/${{ env.BACKEND_FILE }}"
+    # Run Terraform init for Main branch
+    - name: Terraform Init for Main branch
+      id: init-main
+      if: github.ref == 'refs/heads/main'
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
 
-      - name: Run> terraform validate
-        run: |
-          cd "${{ env.WORKING_DIR}}"
-          terraform validate
+    # Run Terraform apply if branch is main
+    - name: Terraform Apply for Main branch
+      if: github.ref == 'refs/heads/main'
+      id: apply
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform apply -auto-approve
 
-      - name: Run> terraform plan
-        id: tf-plan
-        run: |
-          cd "${{ env.WORKING_DIR}}"
-          terraform plan -detailed-exitcode -input=false
-        continue-on-error: true
+    # Run formatting and validate if the branch is not main
+    - name: Terraform Init for other branches
+      id: init
+      if: github.ref != 'refs/heads/main'
+      run: terraform init -backend=false
 
-      - name: Check for "terraform plan" failure
-        if: steps.tf-plan.outputs.exitcode == 1
-        run: exit 1
+    # Run a Terraform format
+    - name: Terraform format for other branches
+      if: github.ref != 'refs/heads/main'
+      id: fmt
+      run: terraform fmt -check
 
-    outputs:
-      tf-plan-exit-code: ${{ steps.tf-plan.outputs.exitcode }}
+    # Run a Terraform validate
+    - name: Terraform validate for other branches
+      id: validate
+      if: (success() || failure()) && github.ref != 'refs/heads/main'
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform validate -no-color
