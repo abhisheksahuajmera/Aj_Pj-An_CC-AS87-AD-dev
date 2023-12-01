@@ -3,7 +3,7 @@ name: 'Terraform Plan/Apply'
 on:
   push:
     branches:
-    - Aj_Pj-An_CC-AS87-AD-dev
+    - feature_AS127_dev_100
 
 #Special permissions required for OIDC authentication
 permissions:
