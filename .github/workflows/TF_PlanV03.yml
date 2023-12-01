@@ -13,16 +13,32 @@ on:
 env:
   WORKING_DIR: "./"
   TF_VER: 1.4.6
-  BACKEND_FILE: backend.tf
+  TARGET_ENV: dev
+  BACKEND_FILE: provider.tf
   #
+  TF_VAR_client_id: 'c1d00aec-4e92-4fae-88a7-1d68a129b074'
+  TF_VAR_subscription_id: '729672c5-d8c3-49fd-be05-c404781c9394'
+  TF_VAR_environment: 'dev'
+
   
+
 jobs:
   tf-plan:
     timeout-minutes: ${{ fromJSON(vars.JOB_TIMEOUT_MINUTES_SHORT) }}
     name: 'terraform: init,validate,plan'
     runs-on: ubuntu-latest
 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
     steps:
+      # Checkout the repository to the GitHub Actions runner
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Checkout Repo
         uses: actions/checkout@v3
 
@@ -31,17 +47,22 @@ jobs:
         with:
           terraform_version: '${{ env.TF_VER }}'
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
+      - name: Run> terraform init
+        run: |
+          cd "${{ env.WORKING_DIR}}"
+          terraform init -upgrade -input=false -reconfigure -backend-config="${{ env.TARGET_ENV }}/${{ env.BACKEND_FILE }}"
 
       - name: Run> terraform validate
-        run: terraform validate
+        run: |
+          cd "${{ env.WORKING_DIR}}"
+          terraform validate
 
-      - name: Terraform Plan
-        id: plan
-        if: github.event_name == 'push'
-        run: terraform plan -no-color
+      - name: Run> terraform plan
+        id: tf-plan
+        run: |
+          cd "${{ env.WORKING_DIR}}"
+          terraform plan -detailed-exitcode -input=false
+        continue-on-error: true
 
       - name: Check for "terraform plan" failure
         if: steps.tf-plan.outputs.exitcode == 1
