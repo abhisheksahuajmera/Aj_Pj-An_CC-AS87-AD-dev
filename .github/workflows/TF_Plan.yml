@@ -43,12 +43,12 @@ jobs:
 
     # Run Terraform init for Main branch
     - name: Terraform Init for feature_AS127_dev_100 branch
-      id: init-main
+      id: init-main`
       if: github.ref == 'refs/heads/feature_AS127_dev_100'
       env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       run: terraform init"
 
     # Run Terraform apply if branch is main
@@ -56,16 +56,16 @@ jobs:
       if: github.ref == 'refs/heads/feature_AS127_dev_100'
       id: apply
       env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       run: terraform apply -auto-approve
 
     # Run a Terraform validate
     - name: Terraform validate
       id: validate
       env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        AZURE_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       run: terraform validate -no-color
