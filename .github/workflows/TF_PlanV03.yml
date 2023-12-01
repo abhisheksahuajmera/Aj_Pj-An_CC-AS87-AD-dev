@@ -1,137 +1,51 @@
-# name: 'Terraform-Plan-Infra-PlanV03'
+name: 'Terraform-Plan-Infra-PlanV03'
 
-# # to trigger this workflow manually, run:
-# # `gh workflow run tf-cie-iac-dh-dev`
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - 'feature/*'
+    paths:
+      - './**'
+      - '.github/workflows/TF_PlanV03.yml'
 
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - master
-#       - 'feature/*'
-#     paths:
-#       - 'tf-app/dev/**'
-#       - '.github/workflows/tf-app-dh-dev.yml'
+env:
+  WORKING_DIR: "./"
+  TF_VER: 1.4.6
+  BACKEND_FILE: backend.tf
+  #
+  
+jobs:
+  tf-plan:
+    timeout-minutes: ${{ fromJSON(vars.JOB_TIMEOUT_MINUTES_SHORT) }}
+    name: 'terraform: init,validate,plan'
+    runs-on: ubuntu-latest
 
-# env:
-#   GH_REPO_ACCESS_PAT: ${{ secrets.GH_REPO_ACCESS_PAT }}
-#   WORKING_DIR: ../source-iac/tf-app
-#   TF_VER: 1.4.6
-#   TARGET_ENV: dev
-#   BACKEND_FILE: backend.tf
-#   #
-#   TF_VAR_client_secret: ${{ secrets.AZ_SP_CLIENT_SECRET_DH_DEV }}
-#   ARM_ACCESS_KEY: ${{ secrets.AZ_ARM_ACCESS_KEY_STCIEIACDHNONPROD }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-#   TF_VAR_client_id: '703296d6-9155-4b14-aeb0-d7bd28470b36'
-#   TF_VAR_subscription_id: '1a74e144-20fe-4134-a87f-7de68b1b7899'
-#   TF_VAR_environment: 'dev'  
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '${{ env.TF_VER }}'
 
-# jobs:
-#   tf-plan:
-#     timeout-minutes: ${{ fromJSON(vars.JOB_TIMEOUT_MINUTES_SHORT) }}
-#     name: 'terraform: init,validate,plan'
-#     runs-on:
-#       group: CIEONLY
-#     environment: dh-dev-plan
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
-#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-#     defaults:
-#       run:
-#         shell: bash
+      - name: Run> terraform validate
+        run: terraform validate
 
-#     steps:
-#       # Checkout the repository to the GitHub Actions runner
-#       - uses: actions/setup-node@v2
-#         with:
-#           node-version: '14'
+      - name: Terraform Plan
+        id: plan
+        if: github.event_name == 'push'
+        run: terraform plan -no-color
 
-#       - name: Checkout Repo
-#         uses: actions/checkout@v3
+      - name: Check for "terraform plan" failure
+        if: steps.tf-plan.outputs.exitcode == 1
+        run: exit 1
 
-#       - name: Set git credential for private TF module access
-#         run: |
-#           git config --local --remove-section http."https://github.com/"
-#           git config --global url."https://foo:${GH_REPO_ACCESS_PAT}@github.com/tandemdiabetes".insteadOf "https://github.com/tandemdiabetes"
-
-#       - name: Install Terraform
-#         uses: hashicorp/setup-terraform@v2
-#         with:
-#           terraform_version: '${{ env.TF_VER }}'
-
-#       - name: Run> terraform init
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform init -upgrade -input=false -reconfigure -backend-config="${{ env.TARGET_ENV }}/${{ env.BACKEND_FILE }}"
-
-#       - name: Run> terraform validate
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform validate
-
-#       - name: Run> terraform plan
-#         id: tf-plan
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform plan -detailed-exitcode -input=false
-#         continue-on-error: true
-
-#       - name: Check for "terraform plan" failure
-#         if: steps.tf-plan.outputs.exitcode == 1
-#         run: exit 1
-
-#     outputs:
-#       tf-plan-exit-code: ${{ steps.tf-plan.outputs.exitcode }}
-
-#   tf-apply:
-#     timeout-minutes: ${{ fromJSON(vars.JOB_TIMEOUT_MINUTES_LONG) }}
-#     name: 'terraform: apply'
-#     runs-on:
-#       group: CIEONLY
-#     needs: tf-plan
-#     if: |
-#       needs.tf-plan.outputs.tf-plan-exit-code == 2
-#     environment: dh-dev-apply
-#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-#     defaults:
-#       run:
-#         shell: bash
-
-#     steps:
-#       - uses: actions/setup-node@v2
-#         with:
-#           node-version: '14'
-#       # Checkout the repository to the GitHub Actions runner
-#       - name: Checkout Repo
-#         uses: actions/checkout@v3
-
-#       - name: Set git credential for private TF module access
-#         run: |
-#           git config --local --remove-section http."https://github.com/"
-#           git config --global url."https://foo:${GH_REPO_ACCESS_PAT}@github.com/tandemdiabetes".insteadOf "https://github.com/tandemdiabetes"
-
-#       - name: Install Terraform
-#         uses: hashicorp/setup-terraform@v2
-#         with:
-#           terraform_version: '${{ env.TF_VER }}'
-
-#       - name: Run> terraform init
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform init -upgrade -input=false -reconfigure -backend-config="${{ env.TARGET_ENV }}/${{ env.BACKEND_FILE }}"
-
-#       - name: Run> terraform validate
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform validate
-
-#       - name: Run> terraform fmt
-#         run: |
-#           cd "${{ env.WORKING_DIR }}"
-#           terraform fmt -check -recursive
-#         continue-on-error: true
-
-#       - name: Run> terraform apply
-#         run: |
-#           cd "${{ env.WORKING_DIR}}"
-#           terraform apply -auto-approve
+    outputs:
+      tf-plan-exit-code: ${{ steps.tf-plan.outputs.exitcode }}
