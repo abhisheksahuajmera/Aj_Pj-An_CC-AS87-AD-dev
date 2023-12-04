@@ -1,9 +1,8 @@
-# // Resource
-# resource "azurerm_aadb2c_directory" "aadb2c_directory" {
-#   country_code            = local.country_code
-#   data_residency_location = local.data_residency_location
-#   display_name            = local.display_name
-#   domain_name             = local.domain_name
-#   resource_group_name     = "$module.resourcing.nameop"
-#   sku_name                = local.sku_name
-# }
+resource "azurerm_function_app" "azurerm_function_apptg" {
+  name                       = local.name
+  location                   = "${module.resourcing_resourcegroup.resource_group_location}"
+  resource_group_name        = "${module.resourcing_resourcegroup.resource_group_name}"
+  app_service_plan_id        = "${module.slcomputing_serplan.azurerm_app_service_plantg.id}"
+  storage_account_name       = "${module.slcomputing_saaccount.azurerm_storage_accounttg.storage_account_name}"
+  storage_account_access_key = "${module.slcomputing_saaccount.azurerm_storage_accounttg.storage_account_access_key}"
+}
