@@ -1,12 +1,12 @@
-// bootstraping-resourcing
-module "resourcing_rg" {
-  source              = "./modules/bootstraping/resourcing/rg" // Add version after registry
-  prefix              = var.prefix
-  environment         = var.environment
-  environment_version = var.environment_version
-}
-
 // appusing-securing-adb2c
 module "securing_adb2c" {
-  source              = "./modules/appusing/securing/adb2c" // Add version after registry
+  source                  = "./modules/adb2c" // Add version after registry
+  resource_group_name     = local.resource_group_name
+  resource_group_location = local.resource_group_location
+}
+
+// bootstraping-resourcing-rg
+resource "azurerm_resource_group" "resource_grouptg" {
+  name     = local.resource_group_name
+  location = local.resource_group_location
 }

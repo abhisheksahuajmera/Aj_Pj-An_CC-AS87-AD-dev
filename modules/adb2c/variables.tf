@@ -1,10 +1,19 @@
-//
-variable "country_code" {
-  type        = string
-  description = "(Required)"
-  default     = "US"
+variable "resource_group_name" {
+    type        = string
+    description = "RG name in Azure"
 }
 
+variable "resource_group_location" {
+    type        = string
+    description = "RG location in Azure"
+}
+
+variable "resource_group_location_country_code" {
+    type        = string
+    description = "RG location country code in Azure"
+}
+
+//
 variable "prefix" {
   type        = string
   description = "(Required)"
