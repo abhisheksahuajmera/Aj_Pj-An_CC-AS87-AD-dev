@@ -12,7 +12,7 @@ module "securing_adb2c" {
 
 // appusing-storing-saaccunt
 module "slcomputing_saaccunt" {
-  source              = "./modules/appusing/storing/saaccunt" // Add version after registry
+  source              = "./modules/appusing/storing/saaccount" // Add version after registry
 }
 
 // appusing-slcomputing-serplan
