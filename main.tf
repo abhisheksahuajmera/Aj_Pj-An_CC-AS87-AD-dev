@@ -1,5 +1,5 @@
 // bootstraping-resourcing
-module "resourcing" {
+module "resourcing_resourcegroup" {
   source              = "./modules/bootstraping/resourcing/resourcegroup" // Add version after registry
   prefix              = var.prefix
   environment         = var.environment

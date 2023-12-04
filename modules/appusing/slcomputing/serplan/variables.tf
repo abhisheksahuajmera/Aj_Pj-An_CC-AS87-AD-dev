@@ -1,7 +1,7 @@
 # resource "azurerm_app_service_plan" "example" {
 #   name                = local.name
-#   location            = "${module.resourcing_resourcegroup.resource_group_location}"
-#   resource_group_name = "${module.resourcing_resourcegroup.resource_group_name}"
+#   location            = "${module.resourcing_rg.resource_group_location}"
+#   resource_group_name = "${module.resourcing_rg.resource_group_name}"
 
 #   sku {
 #     tier = "${var.resourcing.resource_group_name}"
