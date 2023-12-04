@@ -10,7 +10,7 @@ variable "project" {
   default     = "Aj_Pj-An_CC-AS87"
 }
 
-variable "prefix" {
+variable "project_prefix" {
   type        = string
   description = "(Optional) The prefix which should be used for all resources in this example. Defaults to burrito."
   default     = "Assetronai"
@@ -32,12 +32,6 @@ variable "environment_version" {
   type        = string
   description = "(Required) Update to force a change."
   default     = "100"
-}
-
-// Coming from root module or else create .tf var for each sub module
-variable "prefix" {
-  type        = string
-  description = "(Optional) The prefix which should be used for all resources in this example. Defaults to burrito."
 }
 
 variable "resource_group_version" {
@@ -65,7 +59,7 @@ variable "resource_group_location_country_code" {
 }
 
 locals {
-  resource_group_name    = "${var.prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}-${var.resource_group_version}"
+  resource_group_name    = "${var.project_prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}-${var.resource_group_version}"
   resource_group_location = "${var.resource_group_location}"
   resource_group_location_country_code = "${var.resource_group_location_country_code}"
 }
