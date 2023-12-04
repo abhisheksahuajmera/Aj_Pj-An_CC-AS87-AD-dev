@@ -30,11 +30,11 @@ variable "sku_name" {
 }
 
 locals {
-   country_code = "${module.resourcing_resourcegroup.resource_group_country_code}"
-   data_residency_location = "${module.resourcing_resourcegroup.resource_group_location}"
+   country_code = "${module.resourcing_rg.resource_group_country_code}"
+   data_residency_location = "${module.resourcing_rg.resource_group_location}"
    display_name    = "${var.prefix}-${var.aadb2c_version}"
    display_name_modified = replace(local.display_name, "-", "")
    domain_name    = "${local.display_name_modified}${var.domain_suffix}"
-   resource_group_name     = "${module.resourcing_resourcegroup.resource_group_name}"
+   resource_group_name     = "${module.resourcing_rg.resource_group_name}"
    sku_name                = "${var.sku_name}"
 }
