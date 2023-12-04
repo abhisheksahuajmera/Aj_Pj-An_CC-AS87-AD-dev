@@ -6,6 +6,14 @@ module "securing_adb2c" {
   resource_group_name     = local.resource_group_name
 }
 
+// appusing-storing-saaccount
+module "securing_saaccount" {
+  source                  = "./modules/saaccount" // Add version after registry
+  resource_group_name     = local.resource_group_name
+  location     = local.resource_group_location
+}
+
+
 // bootstraping-resourcing-rg
 resource "azurerm_resource_group" "resource_grouptg" {
   name     = local.resource_group_name
