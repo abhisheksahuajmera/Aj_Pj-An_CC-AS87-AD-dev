@@ -26,9 +26,9 @@ module "slcomputing_azfunc" {
   location     = local.resource_group_location
   resource_group_name     = local.resource_group_name
 
-  app_service_plan_id        = "${module.slcomputing_serplan.id}"
-  storage_account_name       = "${module.securing_saaccount.storage_account_name}"
-  storage_account_access_key = "${module.securing_saaccount.storage_account_access_key}"
+  app_service_plan_id        = "${module.slcomputing_serplan.app_service_plan_idop}"
+  storage_account_name       = "${module.securing_saaccount.storage_account_nameop}"
+  storage_account_access_key = "${module.securing_saaccount.storage_account_access_keyop}"
 }
 
 
