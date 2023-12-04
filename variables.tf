@@ -58,6 +58,12 @@ variable "resource_group_location_country_code" {
   default     = "US"
 }
 
+variable "resource_group_data_residency_location" {
+  type        = string
+  description = "(Required) Update to force a change."
+  default     = "United States"
+}
+
 locals {
   resource_group_name    = "${var.project_prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}-${var.resource_group_version}"
   resource_group_location = "${var.resource_group_location}"
