@@ -1,2 +1,1 @@
-# output "nameop"      { value = "${azurerm_resource_group.resource_group.name}" }
-# output "locationop"      { value = "${azurerm_resource_group.resource_group.location}" }
+output "nameop"      { value = "${azurerm_resource_group.azurerm_aadb2c_directory.display_name}" }
