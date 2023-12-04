@@ -5,4 +5,5 @@ prefix = "Assetronai"
 workspace = "Aj_Pj-An_CC-AS87-AD-dev"
 environment = "dev"
 environment_version = "100"
+
 resource_group_name = "Assetronai-dev-100-rg-100"
