@@ -4,7 +4,7 @@ variable "prefix" {
   default     = "asac"
 }
 
-variable "version" {
+variable "asac_version" {
   type        = string
   description = "(Required)"
   default     = "100"
@@ -35,5 +35,5 @@ variable "storage_account_access_key" {
 }
 
 locals {
-  name    = "${var.prefix}-${var.version}"
+  name    = "${var.prefix}-${var.asac_version}"
 }
