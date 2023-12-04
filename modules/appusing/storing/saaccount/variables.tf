@@ -1,39 +1,39 @@
-variable "prefix" {
-  type        = string
-  description = "(Required)"
-  default     = "asac"
-}
+# variable "prefix" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "asac"
+# }
 
-variable "asac_version" {
-  type        = string
-  description = "(Required)"
-  default     = "100"
-}
+# variable "asac_version" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "100"
+# }
 
-variable "account_tier" {
-  type        = string
-  description = "(Required)"
-  default     = "Standard"
-}
+# variable "account_tier" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "Standard"
+# }
 
-variable "account_replication_type" {
-  type        = string
-  description = "(Required)"
-  default     = "LRS"
-}
+# variable "account_replication_type" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "LRS"
+# }
 
-variable "storage_account_name" {
-  type        = string
-  description = "(Required)"
-  default     = "LRS"
-}
+# variable "storage_account_name" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "LRS"
+# }
 
-variable "storage_account_access_key" {
-  type        = string
-  description = "(Required)"
-  default     = "LRS"
-}
+# variable "storage_account_access_key" {
+#   type        = string
+#   description = "(Required)"
+#   default     = "LRS"
+# }
 
-locals {
-  name    = "${var.prefix}-${var.asac_version}"
-}
+# locals {
+#   name    = "${var.prefix}-${var.asac_version}"
+# }
