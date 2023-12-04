@@ -45,5 +45,5 @@ variable "storage_account_access_key" {
 }
 
 locals {
-  name    = "${var.prefix}-${var.asac_version}"
+  name    = "${var.prefix}${var.asac_version}"
 }
