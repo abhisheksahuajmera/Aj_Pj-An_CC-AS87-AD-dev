@@ -3,5 +3,5 @@
 # output "resource_group_country_code"      { value = local.resource_group_country_code }
 
 
-output "nameop"      { value = "${azurerm_resource_group.resource_group.name}" }
-output "locationop"      { value = "${azurerm_resource_group.resource_group.location}" }
+output "nameop"      { value = "${azurerm_resource_group.azurerm_resource_grouptg.name}" }
+output "locationop"      { value = "${azurerm_resource_group.azurerm_resource_grouptg.location}" }
