@@ -4,12 +4,12 @@ variable "prefix" {
   default     = "azfunc"
 }
 
-variable "version" {
+variable "azfunc_version" {
   type        = string
   description = "(Required)"
   default     = "100"
 }
 
 locals {
-  name    = "${var.prefix}-${var.version}"
+  name    = "${var.prefix}-${var.azfunc_version}"
 }

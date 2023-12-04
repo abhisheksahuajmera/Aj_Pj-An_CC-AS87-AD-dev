@@ -15,7 +15,7 @@ variable "prefix" {
   default     = "azsplan"
 }
 
-variable "version" {
+variable "azsplan_version" {
   type        = string
   description = "(Required)"
   default     = "100"
@@ -34,5 +34,5 @@ variable "sku_size" {
 }
 
 locals {
-  name    = "${var.prefix}-${var.version}"
+  name    = "${var.prefix}-${var.azsplan_version}"
 }
