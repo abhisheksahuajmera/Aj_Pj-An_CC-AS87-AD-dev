@@ -12,23 +12,23 @@ module "securing_adb2c" {
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
 }
 
-// appusing-storing-saaccount
+// appusing-storing-storage_account
 module "securing_saaccount" {
-  source                  = "./modules/saaccount" // Add version after registry
+  source                  = "./modules/storage_account" // Add version after registry
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
   location                = azurerm_resource_group.azurerm_resource_grouptg.location
 }
 
-// appusing-slcomputing-serplan
+// appusing-slcomputing-service_plan
 module "slcomputing_serplan" {
-  source                  = "./modules/serplan" // Add version after registry
+  source                  = "./modules/service_plan" // Add version after registry
   location				  = azurerm_resource_group.azurerm_resource_grouptg.location
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
 }
 
-// appusing-slcomputing-azfunc
+// appusing-slcomputing-azure_function
 module "slcomputing_azfunc" {
-  source                     = "./modules/azfunc" // Add version after registry
+  source                     = "./modules/azure_function" // Add version after registry
   location                   = azurerm_resource_group.azurerm_resource_grouptg.location
   resource_group_name        = azurerm_resource_group.azurerm_resource_grouptg.name
   app_service_plan_id        = "${module.slcomputing_serplan.app_service_plan_idop}"
@@ -38,16 +38,16 @@ module "slcomputing_azfunc" {
 
 
 
-// orchestrating-containerizing-azacr
+// orchestrating-containerizing-container_registry
 module "containerizing_azacr" {
-  source                  = "./modules/azacr" // Add version after registry
+  source                  = "./modules/container_registry" // Add version after registry
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
   location                = azurerm_resource_group.azurerm_resource_grouptg.location
 }
 
-// appusing-storing-azvault
+// appusing-storing-key_vault
 module "containerizing_azvault" {
-  source                  = "./modules/azvault" // Add version after registry
+  source                  = "./modules/key_vault" // Add version after registry
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
   location                = azurerm_resource_group.azurerm_resource_grouptg.location
 }
