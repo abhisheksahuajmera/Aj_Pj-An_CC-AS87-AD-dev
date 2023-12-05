@@ -3,9 +3,9 @@ variable "resource_group_name" {
     description = "resource_group_name"
 }
 
-variable "resource_group_location" {
+variable "location" {
     type        = string
-    description = "resource_group_location"
+    description = "location"
 }
 //
 variable "enabled_for_disk_encryption" {
