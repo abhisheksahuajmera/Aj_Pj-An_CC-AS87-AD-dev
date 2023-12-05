@@ -18,7 +18,7 @@ variable "azacr_prefix" {
 variable "azacr_version" {
   type        = string
   description = "(Required)"
-  default     = "100"
+  default     = "101"
 }
 
 variable "azacr_sku" {
@@ -49,7 +49,7 @@ variable "azacrwh_prefix" {
 variable "azacrwh_version" {
   type        = string
   description = "(Required)"
-  default     = "100"
+  default     = "101"
 }
 
 variable "azacrwh_status" {

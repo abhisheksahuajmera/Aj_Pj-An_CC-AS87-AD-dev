@@ -17,7 +17,7 @@ variable "prefix" {
 variable "azsplan_version" {
   type        = string
   description = "(Required)"
-  default     = "100"
+  default     = "101"
 }
 
 variable "sku_tier" {
