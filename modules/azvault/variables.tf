@@ -7,7 +7,7 @@ variable "resource_group_location" {
     type        = string
     description = "resource_group_location"
 }
-
+//
 variable "enabled_for_disk_encryption" {
   type        = bool
   description = "(Required)"
@@ -56,12 +56,12 @@ variable "prefix" {
   default     = "azfunc"
 }
 
-variable "version" {
+variable "azvault_version" {
   type        = string
   description = "(Required)"
   default     = "100"
 }
 // --
 locals {
-  name    = "${var.prefix}-${var.version}"
+  name    = "${var.prefix}-${var.azvault_version}"
 }
