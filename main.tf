@@ -31,10 +31,9 @@ module "slcomputing_azfunc" {
   source                     = "./modules/azfunc" // Add version after registry
   location                   = azurerm_resource_group.azurerm_resource_grouptg.location
   resource_group_name        = azurerm_resource_group.azurerm_resource_grouptg.name
-
-  app_service_plan_id        = "${module.slcomputing_serplan.app_service_plan_idop}"
-  storage_account_name       = "${module.securing_saaccount.storage_account_nameop}"
-  storage_account_access_key = "${module.securing_saaccount.storage_account_access_keyop}"
+  app_service_plan_id        = azurerm_app_service_plan.azurerm_app_service_plantg.id
+  storage_account_name       = azurerm_storage_account.azurerm_storage_accounttg.name
+  storage_account_access_key = azurerm_storage_account.azurerm_storage_accounttg.primary_access_key
 }
 
 
