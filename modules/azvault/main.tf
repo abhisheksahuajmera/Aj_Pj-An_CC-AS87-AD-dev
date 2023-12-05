@@ -12,7 +12,7 @@ resource "azurerm_key_vault" "example" {
   soft_delete_retention_days  = "${var.soft_delete_retention_days}"
   purge_protection_enabled    = "${var.purge_protection_enabled}"
 
-  sku_name = "${var.soft_delete_retention_days}"
+  sku_name = "${var.sku_name}"
 
   access_policy {
     tenant_id = data.azurerm_client_config.azurerm_client_configtg.tenant_id

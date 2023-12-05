@@ -78,6 +78,6 @@ variable "azacrwh_custom_headers_content_type" {
 
 // --
 locals {
-   azacr_name    = "${var.azacr_prefix}-${var.azacr_version}"
-   azacrwh_name    = "${var.azacr_prefix}-${var.azacr_version}"
+   azacr_name    = "${var.azacr_prefix}${var.azacr_version}"
+   azacrwh_name    = "${var.azacr_prefix}${var.azacr_version}"
 }
