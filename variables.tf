@@ -37,7 +37,7 @@ variable "environment_version" {
 variable "resource_group_version" {
   type        = string
   description = "(Required) Update to force a change."
-  default     = "108"
+  default     = "109"
 }
 
 variable "resource_group_prefix" {
