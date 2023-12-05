@@ -32,7 +32,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
-        run: terraform init
+        run: terraform init -upgrade -input=false
 
       - name: 'Terraform plan'
         id: plan
