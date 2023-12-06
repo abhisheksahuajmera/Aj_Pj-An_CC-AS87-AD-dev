@@ -27,5 +27,5 @@ variable "sku_size" {
 }
 
 locals {
-   name    = "${var.prefix}${var.azstsite_version}"
+   name   = "${var.prefix}${var.azstsite_version}"
 }
