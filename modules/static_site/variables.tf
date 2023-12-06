@@ -14,7 +14,7 @@ variable "prefix" {
   default     = "azstsite"
 }
 
-variable "version" {
+variable "azstsite_version" {
   type        = string
   description = "(Required)"
   default     = "101"
@@ -27,5 +27,5 @@ variable "sku_size" {
 }
 
 locals {
-   name    = "${var.prefix}${var.aadb2c_version}"
+   name    = "${var.prefix}${var.azstsite_version}"
 }
