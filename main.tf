@@ -51,3 +51,10 @@ module "containerizing_azvault" {
   resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
   location                = azurerm_resource_group.azurerm_resource_grouptg.location
 }
+
+// bootstraping-creating-static_site
+module "creating_azstsite" {
+  source                  = "./modules/static_site" // Add version after registry
+  resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
+  location                = azurerm_resource_group.azurerm_resource_grouptg.location
+}
