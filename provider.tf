@@ -1,13 +1,13 @@
 terraform {
   required_providers {
-    azuredevops = {
-      source = "microsoft/azuredevops"
-      version = ">= 0.1.0" 
-    }
+    # azuredevops = {
+    #   source = "microsoft/azuredevops"
+    #   version = ">= 0.1.0" 
+    # }
 
     azurerm = {
       source = "hashicorp/azurerm"
-      version = ">= 2.0"
+      version = ">= 3.7.0"
     }
   }
 
@@ -20,7 +20,7 @@ terraform {
   }
 }
 
-# provider "azurerm" {
-#   features {}
-# }
+provider "azurerm" {
+  features {}
+}
 

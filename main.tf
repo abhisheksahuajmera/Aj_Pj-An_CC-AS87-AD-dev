@@ -66,9 +66,9 @@ module "generating_creating_azstsite" {
 }
 
 // bootstraping-generating-azdevops_gitproject
-module "generating_gitproject" {
-  source                  = "./modules/azdevops_project" // Add version after registry
-}
+# module "generating_gitproject" {
+#   source                  = "./modules/azdevops_project" // Add version after registry
+# }
 
 
 
