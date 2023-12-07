@@ -24,8 +24,8 @@ provider "azurerm" {
   features {}
 }
 
-# provider "azuredevops" {
-#   org_service_url = "https://dev.azure.com/ajmerainfotech100"
-#   personal_access_token = "vlij5prwhkclld6zn34l4htqzfjj4onr2qg4jjx37wchr5rgj2fa"
-# }
+provider "azuredevops" {
+  org_service_url = "https://dev.azure.com/ajmerainfotech100"
+  personal_access_token = "vlij5prwhkclld6zn34l4htqzfjj4onr2qg4jjx37wchr5rgj2fa"
+}
 
