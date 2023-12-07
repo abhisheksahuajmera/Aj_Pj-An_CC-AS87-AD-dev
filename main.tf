@@ -66,23 +66,9 @@ module "generating_creating_azstsite" {
 }
 
 // bootstraping-generating-azdevops_gitproject
-# module "generating_gitproject" {
-#   source                  = "./modules/azdevops_project" // Add version after registry
-# }
-
-
-resource "azuredevops_project" "azuredevops_projecttg" {
-  project_name       = local.project_name
-  # visibility         = var.visibility
-  # version_control    = var.version_control
-  # work_item_template = var.work_item_template
-
-  # features = {
-  #     "boards" = var.features_boards
-  #     "repositories" = var.features_repositories
-  #     "pipelines" = var.features_pipelines
-  #     "testplans" = var.features_testplans
-  #     "artifacts" = var.features_artifacts
-  # }
+module "generating_gitproject" {
+  source                  = "./modules/azdevops_project" // Add version after registry
 }
+
+
 
