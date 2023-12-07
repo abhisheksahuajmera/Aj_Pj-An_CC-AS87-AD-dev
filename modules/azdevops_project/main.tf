@@ -10,7 +10,7 @@ terraform {
 
 
 resource "azuredevops_project" "azuredevops_projecttg" {
-  project_name       = local.project_name
+  name               = local.name
   description        = var.description
   visibility         = var.visibility
   version_control    = var.version_control
