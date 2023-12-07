@@ -53,5 +53,5 @@ variable "features_artifacts" {
 }
 
 locals {
-  project_name  = "${var.project_prefix}${var.project_version}"
+  name  = "${var.project_prefix}${var.project_version}"
 }
