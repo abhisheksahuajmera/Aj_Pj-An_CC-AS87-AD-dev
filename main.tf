@@ -69,3 +69,5 @@ module "generating_creating_azstsite" {
 module "generating_gitproject" {
   source                  = "./modules/azdevops_project" // Add version after registry
 }
+
+

@@ -4,6 +4,10 @@ terraform {
       source = "hashicorp/azurerm"
       version = "~> 3.0.2"
     }
+    azuredevops = {
+      source = "microsoft/azuredevops"
+      version = ">= 0.1.0" 
+    }
   }
   required_version = ">= 1.1.0"
 
@@ -18,4 +22,12 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "azuredevops" {
+  version = ">= 0.0.1"
+  org_service_url = "https://dev.azure.com/ajmerainfotech100"
+  personal_access_token {
+    token = "4x4qccuoumcb2iw4pkkwjqqodulscfaxn4thhj3sfjdvn57xk7ea"
+  }
 }

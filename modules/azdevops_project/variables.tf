@@ -18,6 +18,31 @@ variable "work_item_template" {
   default = "Agile"
 }
 
+variable "features_boards" {
+  type    = string
+  default = "enabled"
+}
+
+variable "features_repositories" {
+  type    = string
+  default = "enabled"
+}
+
+variable "features_pipelines" {
+  type    = string
+  default = "enabled"
+}
+
+variable "features_testplans" {
+  type    = string
+  default = "enabled"
+}
+
+variable "features_artifacts" {
+  type    = string
+  default = "enabled"
+}
+
 locals {
   project_name  = "${var.project_prefix}${var.project_version}"
 }
