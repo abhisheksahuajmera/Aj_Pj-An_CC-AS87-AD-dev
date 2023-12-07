@@ -9,7 +9,7 @@ terraform {
 
 provider "azuredevops" {
   org_service_url = "https://dev.azure.com/ajmerainfotech100"
-  personal_access_token = "m3qjeqshcosgzfkwy5rervbm276vu5jyjryc3jb6uim3wxtqx63a"
+  personal_access_token = "hknvap3idnryh5ma32tmr5by5b2wnu4wcokkoqgad747cgzeiu6q"
 }
 
 resource "azuredevops_project" "azuredevops_projecttg" {
