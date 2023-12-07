@@ -1,11 +1,11 @@
-# terraform {
-#   required_providers {
-#     azuredevops = {
-#       source = "microsoft/azuredevops"
-#       version = "0.1.7"
-#     }
-#   }
-# }
+terraform {
+  required_providers {
+    azuredevops = {
+      source = "microsoft/azuredevops"
+      version = "0.1.7"
+    }
+  }
+}
 
 provider "azuredevops" {
   org_service_url = "https://dev.azure.com/ajmerainfotech100"
