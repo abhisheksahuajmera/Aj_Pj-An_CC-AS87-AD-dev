@@ -9,7 +9,6 @@ terraform {
       version = ">= 0.1.0" 
     }
   }
-  required_version = ">= 1.1.0"
 
   backend "azurerm" {
     resource_group_name   = "Assetronai-dev-101-rg-108"
