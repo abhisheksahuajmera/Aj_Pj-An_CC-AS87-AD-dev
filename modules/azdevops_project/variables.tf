@@ -1,3 +1,12 @@
+variable "project_prefix" {
+  type    = string
+}
+
+variable "project_version" {
+  type    = string
+}
+
+//
 variable "description" {
   type    = string
   default = "Sample Azure DevOps Project Created Using Terraform"

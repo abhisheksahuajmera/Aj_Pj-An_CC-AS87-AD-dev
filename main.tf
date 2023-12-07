@@ -62,7 +62,9 @@ module "creating_azstsite" {
 
 // bootstraping-generating-azdevops_project
 module "generating_creating_azstsite" {
-  source                  = "./modules/azdevops_project" // Add version after registry
+  source             = "./modules/azdevops_project" // Add version after registry
+  project_prefix     = var.project_prefix
+  project_version    = var.project_version
 }
 
 // bootstraping-generating-azdevops_gitproject
