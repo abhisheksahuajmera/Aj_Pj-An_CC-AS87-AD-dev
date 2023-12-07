@@ -1,9 +1,9 @@
 terraform {
   required_providers {
-    azuredevops = {
-      source = "microsoft/azuredevops"
-      version = ">= 0.1.0" 
-    }
+    # azuredevops = {
+    #   source = "microsoft/azuredevops"
+    #   version = ">= 0.1.0" 
+    # }
 
     azurerm = {
       source = "hashicorp/azurerm"
@@ -24,8 +24,8 @@ provider "azurerm" {
   features {}
 }
 
-provider "azuredevops" {
-  org_service_url = "https://dev.azure.com/ajmerainfotech100"
-  personal_access_token = "vlij5prwhkclld6zn34l4htqzfjj4onr2qg4jjx37wchr5rgj2fa"
-}
+# provider "azuredevops" {
+#   org_service_url = "https://dev.azure.com/ajmerainfotech100"
+#   personal_access_token = "vlij5prwhkclld6zn34l4htqzfjj4onr2qg4jjx37wchr5rgj2fa"
+# }
 
