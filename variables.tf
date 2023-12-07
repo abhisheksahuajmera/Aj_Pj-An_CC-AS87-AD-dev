@@ -12,8 +12,14 @@ variable "project" {
 
 variable "project_prefix" {
   type        = string
-  description = "(Optional) The prefix which should be used for all resources in this example. Defaults to burrito."
+  description = "project_prefix"
   default     = "Assetronai"
+}
+
+variable "project_version" {
+  type        = string
+  description = "project_version"
+  default     = "100"
 }
 
 variable "workspace" {

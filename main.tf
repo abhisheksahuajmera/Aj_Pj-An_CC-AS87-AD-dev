@@ -59,3 +59,13 @@ module "creating_azstsite" {
   source                  = "./modules/static_site" // Add version after registry
   resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
 }
+
+// bootstraping-generating-azdevops_project
+module "generating_creating_azstsite" {
+  source                  = "./modules/azdevops_project" // Add version after registry
+}
+
+// bootstraping-generating-azdevops_gitproject
+module "generating_gitproject" {
+  source                  = "./modules/azdevops_project" // Add version after registry
+}
