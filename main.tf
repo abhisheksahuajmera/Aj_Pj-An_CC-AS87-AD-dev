@@ -74,9 +74,16 @@ module "networking_private_network" {
   location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
 // networking-azvsubnet
-module "networking_private_network" {
-  source               = "./modules/private_network" // Add version after registry
+module "networking_private_subnetwork" {
+  source               = "./modules/private_subnetwork" // Add version after registry
   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
   virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
+}
+// networking-aznetsecgrp
+module "networking_network_security_group" {
+  source               = "./modules/network_security_group" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  subnet_id = "${module.networking_private_network.subnet_idop}"
 }
