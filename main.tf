@@ -85,7 +85,7 @@ module "networking_network_security_group" {
   source               = "./modules/network_security_group" // Add version after registry
   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
-  subnet_id = "${module.networking_private_network.subnet_idop}"
+  subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
 }
 // networking-public_ip
 module "networking_public_ip" {
@@ -98,6 +98,6 @@ module "networking_firewall" {
   source               = "./modules/firewall" // Add version after registry
   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
-  subnet_id            = "${module.networking_private_network.subnet_idop}"
+  subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
   public_ip_address_id = "${module.networking_public_ip.idop}"
 }
