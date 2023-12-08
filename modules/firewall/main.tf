@@ -20,7 +20,7 @@ resource "azurerm_firewall" "example" {
 
   ip_configuration {
     name                 = local.ipconfig_name
-    subnet_id            = "${var.subnet_id}"
+    subnet_id            = azurerm_subnet.azurerm_subnettg.id
     public_ip_address_id = "${var.public_ip_address_id}"
   }
 }
