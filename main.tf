@@ -70,34 +70,34 @@ data "azurerm_resource_group" "azurerm_resource_grouptg" {
 // networking-azpvtnet
 module "networking_private_network" {
   source             = "./modules/private_network" // Add version after registry
-  resource_group_name     = azurerm_resource_group.azurerm_resource_grouptg.name
-  location                = azurerm_resource_group.azurerm_resource_grouptg.location
+  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
 // networking-azvsubnet
 module "networking_private_subnetwork" {
   source               = "./modules/private_subnetwork" // Add version after registry
-  resource_group_name  = azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = azurerm_resource_group.azurerm_resource_grouptg.location
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
   virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
 }
 // networking-aznetsecgrp
 module "networking_network_security_group" {
   source               = "./modules/network_security_group" // Add version after registry
-  resource_group_name  = azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = azurerm_resource_group.azurerm_resource_grouptg.location
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
   subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
 }
 // networking-public_ip
 module "networking_public_ip" {
   source               = "./modules/public_ip" // Add version after registry
-  resource_group_name  = azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = azurerm_resource_group.azurerm_resource_grouptg.location
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
 // networking-firewall
 module "networking_firewall" {
   source               = "./modules/firewall" // Add version after registry
-  resource_group_name  = azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = azurerm_resource_group.azurerm_resource_grouptg.location
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
   virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
   subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
   public_ip_address_id = "${module.networking_public_ip.idop}"
