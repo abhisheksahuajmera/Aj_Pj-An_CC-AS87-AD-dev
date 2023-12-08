@@ -16,8 +16,7 @@ terraform {
     resource_group_name   = "assetronai-dev-100"
     storage_account_name  = "sa712"
     container_name        = "sacon101"
-    key                   = "state102.tfstate"
-    access_key            = "EweBna5+KadC4TShpkOemS8IFnw5GQ1BuZ0dNYzL4HU/J2JHIChcvSUoDrAyqDTndmfOGmCbEv8++AStJBSt/g=="
+    key                   = "state103.tfstate"
   }  
 }
 
