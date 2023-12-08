@@ -7,22 +7,25 @@ variable "location" {
     type        = string
     description = "location"
 }
-
-// 
-variable "azpvtnet_prefix" {
+//
+variable "azvpn_prefix" {
   type        = string
   description = "(Required)"
-  default     = "azpvtnet"
+  default     = "azvpn"
 }
 
-variable "azpvtnet_version" {
+variable "azvpn_version" {
   type        = string
   description = "(Required)"
   default     = "101"
 }
 
-// --
+variable "address_space" {
+  type        = list
+  description = "(Required)"
+  default     = ["10.0.0.0/16"]
+}
+
 locals {
-   azacr_name    = "${var.azacr_prefix}${var.azacr_version}"
-   azacrwh_name    = "${var.azacr_prefix}${var.azacr_version}"
+  name    = "${var.azvpn_prefix}-${var.azvpn_version}"
 }
