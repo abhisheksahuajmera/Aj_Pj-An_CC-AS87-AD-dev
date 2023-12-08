@@ -1,13 +1,13 @@
 // bootstraping-resourcing-rg
-resource "azurerm_resource_group" "azurerm_resource_grouptg" {
-  name     = local.resource_group_name
-  location = local.resource_group_location
-}
-
-# data "azurerm_resource_group" "azurerm_resource_grouptg" {
-#   name = "Assetronai-dev-101-rg-108"
-#   # name = "assetronai-dev-100" //qa
+# resource "azurerm_resource_group" "azurerm_resource_grouptg" {
+#   name     = local.resource_group_name
+#   location = local.resource_group_location
 # }
+
+data "azurerm_resource_group" "azurerm_resource_grouptg" {
+  # name = "Assetronai-dev-101-rg-108"
+  name = "assetronai-dev-100" //qa
+}
 
 # // appusing-securing-adb2c
 # module "securing_adb2c" {
