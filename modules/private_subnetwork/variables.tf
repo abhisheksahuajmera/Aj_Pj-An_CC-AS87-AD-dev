@@ -7,25 +7,31 @@ variable "location" {
     type        = string
     description = "location"
 }
+
+
+variable "virtual_network_name" {
+    type        = string
+    description = "virtual_network_name"
+}
 //
-variable "azvnet_prefix" {
+variable "azvsubnet_prefix" {
   type        = string
   description = "(Required)"
-  default     = "azvnet"
+  default     = "azvsubnet_prefix"
 }
 
-variable "azvnet_version" {
+variable "azvsubnet_version" {
   type        = string
   description = "(Required)"
   default     = "101"
 }
 
-variable "address_space" {
+variable "address_prefixes" {
   type        = list
   description = "(Required)"
-  default     = ["10.0.0.0/16"]
+  default     = ["10.0.2.0/24"]
 }
 
 locals {
-  name    = "${var.azvnet_prefix}-${var.azvnet_version}"
+  name    = "${var.azvsubnet_prefix}-${var.azvsubnet_version}"
 }

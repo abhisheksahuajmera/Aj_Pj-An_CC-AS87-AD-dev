@@ -1,12 +1,12 @@
 // bootstraping-resourcing-rg
-# resource "azurerm_resource_group" "azurerm_resource_grouptg" {
-#   name     = local.resource_group_name
-#   location = local.resource_group_location
-# }
+resource "azurerm_resource_group" "azurerm_resource_grouptg" {
+  name     = local.resource_group_name
+  location = local.resource_group_location
+}
 
 data "azurerm_resource_group" "azurerm_resource_grouptg" {
   //name = "Assetronai-dev-101-rg-109"
-  name = "assetronai-dev-100-rg-102" //qa
+  name = "Assetronai-dev-101-rg-108" //qa
 }
 
 # // appusing-securing-adb2c
@@ -70,6 +70,13 @@ data "azurerm_resource_group" "azurerm_resource_grouptg" {
 // networking-azpvtnet
 module "networking_private_network" {
   source             = "./modules/private_network" // Add version after registry
-  project_prefix     = var.project_prefix
-  project_version    = var.project_version
+  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
+}
+// networking-azvsubnet
+module "networking_private_network" {
+  source               = "./modules/private_network" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
 }

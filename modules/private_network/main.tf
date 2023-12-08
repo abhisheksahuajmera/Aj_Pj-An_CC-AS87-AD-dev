@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network" "rg103vn100tg" {
+resource "azurerm_virtual_network" "azurerm_virtual_networktg" {
   name                = local.name
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
