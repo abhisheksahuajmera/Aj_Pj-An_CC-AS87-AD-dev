@@ -98,6 +98,7 @@ module "networking_firewall" {
   source               = "./modules/firewall" // Add version after registry
   resource_group_name  = azurerm_resource_group.azurerm_resource_grouptg.name
   location             = azurerm_resource_group.azurerm_resource_grouptg.location
+  virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
   subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
   public_ip_address_id = "${module.networking_public_ip.idop}"
 }
