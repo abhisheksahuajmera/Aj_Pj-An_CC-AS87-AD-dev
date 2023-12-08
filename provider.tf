@@ -20,11 +20,11 @@ terraform {
   # }
   //QA
   backend "azurerm" {
-    resource_group_name   = "assetronai-dev-100-rg-102"
-    storage_account_name  = "sa0999"
-    container_name        = "sacon100"
-    key                   = "state100.tfstate"
-    access_key            = "gi1GRy6qDRM9BPANcwgkc6iDw1pim0P6xYJBPBc+t7QhLmbPesbci1vP9NljDdnJwZ1KmPjhlSUF+ASt0fKWFw=="
+    resource_group_name   = "assetronai-dev-100"
+    storage_account_name  = "sa712"
+    container_name        = "sacon101"
+    key                   = "state102.tfstate"
+    access_key            = "EweBna5+KadC4TShpkOemS8IFnw5GQ1BuZ0dNYzL4HU/J2JHIChcvSUoDrAyqDTndmfOGmCbEv8++AStJBSt/g=="
   }  
 }
 

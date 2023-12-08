@@ -16,7 +16,7 @@ variable "subnet_id" {
 variable "aznetsecgrp_prefix" {
   type        = string
   description = "(Required)"
-  default     = "aznetsecgrp_prefix"
+  default     = "aznetsecgrp"
 }
 
 variable "aznetsecgrp_version" {

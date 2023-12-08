@@ -87,3 +87,17 @@ module "networking_network_security_group" {
   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
   subnet_id = "${module.networking_private_network.subnet_idop}"
 }
+// networking-public_ip
+module "networking_public_ip" {
+  source               = "./modules/public_ip" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+}
+// networking-firewall
+module "networking_firewall" {
+  source               = "./modules/firewall" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  subnet_id            = "${module.networking_private_network.subnet_idop}"
+  public_ip_address_id = "${module.networking_public_ip.idop}"
+}
