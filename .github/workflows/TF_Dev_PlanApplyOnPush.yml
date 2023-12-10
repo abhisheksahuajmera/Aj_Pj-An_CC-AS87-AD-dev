@@ -51,7 +51,7 @@ jobs:
           -backend-config="state_resource_group_name=Assetronai-dev-101-rg-108" \
           -backend-config="state_storage_account_name=sa110" \
           -backend-config="state_container_name=sacon100" \         
-          -backend-config="state_key=state103.tfstate"          
+          -backend-config="state_key=state103.tfstate"  \         
 
 # resource_group_name   = "assetronai-dev-100"
 # storage_account_name  = "sa712"
