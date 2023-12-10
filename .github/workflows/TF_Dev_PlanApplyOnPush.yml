@@ -49,7 +49,7 @@ jobs:
           terraform init \
           -backend-config="resource_group_name=Assetronai-dev-101-rg-108" \
           -backend-config="storage_account_name=sa110" \
-          -backend-config="container_name=sacon100"          
+          -backend-config="container_name=sacon100" \         
           -backend-config="key=state103.tfstate"          
 
 # resource_group_name   = "assetronai-dev-100"
