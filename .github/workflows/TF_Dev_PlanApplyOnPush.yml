@@ -37,15 +37,16 @@ jobs:
       - uses: actions/checkout@v3
 
       # Config File Driven
-      - name: 'Terraform init'
-        id: init
-        # run: terraform init -upgrade=true -input=false 
-        run: terraform init -upgrade=true -backend-config=backend.hcl
+      # - name: 'Terraform init'
+      #   id: init
+      #   # run: terraform init -upgrade=true -input=false 
+      #   run: terraform init -upgrade=true -backend-config=backend.hcl
 
       # CLI Driven
       - name: 'Terraform init'
         # run: terraform init -upgrade=true -input=false 
-        run: 
+        id: init
+        run: |
           terraform init \
           -backend-config="resource_group_name=Assetronai-dev-101-rg-108" \
           -backend-config="storage_account_name=sa110" \
