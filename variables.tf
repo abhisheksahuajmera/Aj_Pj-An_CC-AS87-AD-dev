@@ -70,6 +70,12 @@ variable "resource_group_data_residency_location" {
   default     = "United States"
 }
 
+variable "state_file_name" {
+  type        = string
+  description = "(Required) Update to force a change."
+  default     = "state103.tfstate"
+}
+
 locals {
   resource_group_name    = "${var.project_prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}-${var.resource_group_version}"
   resource_group_location = "${var.resource_group_location}"
