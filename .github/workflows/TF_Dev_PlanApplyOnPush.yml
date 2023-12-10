@@ -36,13 +36,30 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
+      # Config File Driven
       - name: 'Terraform init'
         id: init
         # run: terraform init -upgrade=true -input=false 
         run: terraform init -upgrade=true -backend-config=backend.hcl
 
+      # CLI Driven
+      - name: 'Terraform init'
+        # run: terraform init -upgrade=true -input=false 
+        run: 
+          terraform init \
+          -backend-config="resource_group_name=Assetronai-dev-101-rg-108" \
+          -backend-config="storage_account_name=sa110" \
+          -backend-config="container_name=sacon100"          
+          -backend-config="key=state103.tfstate"          
+
+# resource_group_name   = "assetronai-dev-100"
+# storage_account_name  = "sa712"
+# container_name        = "sacon101"
+# key                   = "state103.tfstate"
+# # key                   = var.state_file_name
+
         
+
       - name: 'Terraform plan'
         id: plan
         run: terraform plan
