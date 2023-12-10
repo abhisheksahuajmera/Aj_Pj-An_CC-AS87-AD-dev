@@ -40,7 +40,7 @@ jobs:
       - name: 'Terraform init'
         id: init
       #   # run: terraform init -upgrade=true -input=false 
-        run: terraform init -upgrade=true -backend-config=backend.hcl
+        run: terraform init -upgrade=true -backend-config=configs/dev_backend.hcl
 
       # CLI Driven
       # - name: 'Terraform init'
@@ -63,7 +63,7 @@ jobs:
 
       - name: 'Terraform plan'
         id: plan
-        run: terraform plan
+        run: terraform plan -var-file=configs/dev.tfvars
           
       # - name: 'Terraform apply'
       #   id: apply
