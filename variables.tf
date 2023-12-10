@@ -70,6 +70,26 @@ variable "resource_group_data_residency_location" {
   default     = "United States"
 }
 
+variable "state_resource_group_name" {
+  type        = string
+  description = "(Required) Update to force a change."
+}
+
+variable "state_storage_account_name" {
+  type        = string
+  description = "(Required) Update to force a change."
+}
+
+variable "state_container_name" {
+  type        = string
+  description = "(Required) Update to force a change."
+}
+
+variable "state_key" {
+  type        = string
+  description = "(Required) Update to force a change."
+}
+
 variable "state_file_name" {
   type        = string
   description = "(Required) Update to force a change."
