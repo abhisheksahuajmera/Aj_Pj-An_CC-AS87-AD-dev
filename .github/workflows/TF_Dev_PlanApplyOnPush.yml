@@ -39,8 +39,10 @@ jobs:
       # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
-        run: terraform init -upgrade=true -input=false 
+        # run: terraform init -upgrade=true -input=false 
+        run: terraform init -upgrade=true -backend-config=backend.hcl
 
+        
       - name: 'Terraform plan'
         id: plan
         run: terraform plan
