@@ -5,8 +5,8 @@
 # }
 
 data "azurerm_resource_group" "azurerm_resource_grouptg" {
-  # name = "Assetronai-dev-101-rg-108"
-  name = "assetronai-dev-100" //qa
+  name = "Assetronai-dev-101-rg-108"
+  // name = "assetronai-dev-100" //qa
 }
 
 # // appusing-securing-adb2c
