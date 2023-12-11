@@ -5,7 +5,8 @@
 # }
 
 data "azurerm_resource_group" "azurerm_resource_grouptg" {
-  name = "Assetronai-dev-101-rg-108"
+  name = local.resource_group_name
+  //"Assetronai-dev-101-rg-108"
   // name = "assetronai-dev-100" //qa
 }
 
@@ -68,37 +69,110 @@ data "azurerm_resource_group" "azurerm_resource_grouptg" {
 #   project_version    = var.project_version
 # }
 // networking-azpvtnet
-module "networking_private_network" {
-  source             = "./modules/private_network" // Add version after registry
+# module "networking_private_network" {
+#   source             = "./modules/private_network" // Add version after registry
+#   resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+#   location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
+# }
+// networking-azvsubnet
+# module "networking_private_subnetwork" {
+#   source               = "./modules/private_subnetwork" // Add version after registry
+#   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+#   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+#   virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
+# }
+// networking-aznetsecgrp
+# module "networking_network_security_group" {
+#   source               = "./modules/network_security_group" // Add version after registry
+#   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+#   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+#   subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
+# }
+// networking-public_ip
+# module "networking_public_ip" {
+#   source               = "./modules/public_ip" // Add version after registry
+#   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+#   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+# }
+// networking-firewall
+# module "networking_firewall" {
+#   source               = "./modules/firewall" // Add version after registry
+#   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+#   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+#   virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
+#   subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
+#   public_ip_address_id = "${module.networking_public_ip.idop}"
+# }
+
+// networking-hubspoke-logging-log
+module "networking_hubspoke_log_analytics" {
+  source               = "./modules/hub_spoke/log_analytics" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  tags_environment     = "${var.environment}"
+}
+
+data "azurerm_log_analytics_workspace" "law" {
+  name                = "law100"
+  resource_group_name = data.azurerm_resource_group.azurerm_resource_grouptg.name
+}
+// networking-hubspoke-networking-hub-vnet
+module "networking_hubspoke_hub_vnet" {
+  source                  = "./modules/hub_spoke/hub_vnet" // Add version after registry
   resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
   location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
-// networking-azvsubnet
-module "networking_private_subnetwork" {
-  source               = "./modules/private_subnetwork" // Add version after registry
-  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
-  virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
+// networking-hubspoke-networking-spoke-vnet
+module "networking_hubspoke_spoke_vnet_dev" {
+  source                  = "./modules/hub_spoke/spoke_vnet_dev" // Add version after registry
+  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
-// networking-aznetsecgrp
-module "networking_network_security_group" {
-  source               = "./modules/network_security_group" // Add version after registry
-  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
-  subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
+// networking-hubspoke-networking-hub-snet
+module "networking_hubspoke_hub_snet" {
+  source                  = "./modules/hub_spoke/hub_snet" // Add version after registry
+  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location                = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  virtual_network_name    = "${module.networking_hubspoke_hub_vnet.virtual_network_nameop}"
 }
-// networking-public_ip
-module "networking_public_ip" {
-  source               = "./modules/public_ip" // Add version after registry
+
+// networking-hubspoke-monitoring-hub-vnet
+module "networking_hubspoke_hub_vnet_azure_monitor" {
+  source                     = "./modules/hub_spoke/hub_vnet_azure_monitor" // Add version after registry
+  target_resource_id         = "${module.networking_hubspoke_hub_vnet.idop}"
+  log_analytics_workspace_id = "${module.networking_hubspoke_log_analytics.idop}"
+}
+
+// networking-hubspoke-monitoring-monitoring-spoke-vnet
+module "networking_hubspoke_spoke_vnet_dev_azure_monitor" {
+  source                     = "./modules/hub_spoke/spoke_vnet_dev_azure_monitor" // Add version after registry
+  target_resource_id         = "${module.networking_hubspoke_spoke_vnet_dev.idop}"
+  log_analytics_workspace_id = "${module.networking_hubspoke_log_analytics.idop}"
+}
+
+module "networking_hubspoke_hub_nsg" {
+  source               = "./modules/hub_spoke/hub_nsg" // Add version after registry
+  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
+  subnet_id            = "${module.networking_hubspoke_hub_snet.subnet_idop}"
+}
+
+module "networking_hubspoke_spoke_dev_nsg" {
+  source               = "./modules/hub_spoke/dev_nsg" // Add version after registry
   resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
   location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
 }
-// networking-firewall
-module "networking_firewall" {
-  source               = "./modules/firewall" // Add version after registry
-  resource_group_name  = data.azurerm_resource_group.azurerm_resource_grouptg.name
-  location             = data.azurerm_resource_group.azurerm_resource_grouptg.location
-  virtual_network_name = "${module.networking_private_network.virtual_network_nameop}"
-  subnet_id            = "${module.networking_private_subnetwork.subnet_idop}"
-  public_ip_address_id = "${module.networking_public_ip.idop}"
+
+module "networking_hubspoke_hub_spoke_dev_peer" {
+  source                    = "./modules/hub_spoke/hub_spoke_dev_peer" // Add version after registry
+  resource_group_name       = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  virtual_network_name      = "${module.networking_hubspoke_hub_vnet.virtual_network_nameop}"
+  remote_virtual_network_id = "${module.networking_hubspoke_spoke_dev_vnet.idop}"
+}
+
+module "networking_hubspoke_spoke_devhub_peer" {
+  source                    = "./modules/hub_spoke/spoke_devhub_peer" // Add version after registry
+  resource_group_name       = data.azurerm_resource_group.azurerm_resource_grouptg.name
+  virtual_network_name      = "${module.networking_hubspoke_spoke_dev_vnet.virtual_network_nameop}"
+  remote_virtual_network_id = "${module.networking_hubspoke_hub_vnet.idop}"
 }
