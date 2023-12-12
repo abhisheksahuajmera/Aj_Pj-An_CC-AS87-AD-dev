@@ -72,12 +72,12 @@ jobs:
         uses: azure-ad-b2c/deploy-trustframework-policy@v5.3
         with:
           folder: "./../../adb2c_custom/policy/policy_path"
-          files: "policy_path.json"
+          files: "./../../adb2c_custom/policy/policy_pathpolicy_path.json"
           # files: "policy_path.json"
           tenant: ${{ secrets.tenant }}
           clientId: ${{ secrets.clientId }}
           clientSecret: ${{ secrets.clientSecret }}
-          
+
           renumberSteps: true
           addAppInsightsStep: true
           
