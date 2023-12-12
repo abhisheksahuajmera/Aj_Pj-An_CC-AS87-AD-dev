@@ -65,6 +65,6 @@ jobs:
         id: plan
         run: terraform plan -var-file=configs/dev.tfvars
           
-      # - name: 'Terraform apply'
-      #   id: apply
-      #   run: terraform apply -auto-approve
+      - name: 'Terraform apply'
+        id: apply
+        run: terraform apply -auto-approve
