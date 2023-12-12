@@ -1,13 +1,23 @@
-// bootstraping-resourcing-rg
-# resource "azurerm_resource_group" "azurerm_resource_grouptg" {
-#   name     = local.resource_group_name
-#   location = local.resource_group_location
-# }
+
+# // appusing-securing-adb2c
+module "bootstrapping_resource_group" {
+  source   = "./modules/resource_group" // Add version after registry
+  name     = local.resource_group_name
+  location = local.resource_group_location
+}
+
+# // appusing-securing-adb2c
+module "bootstrapping_resource_group_backup_multireg" {
+  source   = "./modules/resource_group_backup_multireg" // Add version after registry
+  resource_group_name_multireg  = local.resource_group_name_multireg
+  resource_group_backup_multireg_locations = local.resource_group_backup_multireg_locations
+}
 
 # data "azurerm_resource_group" "azurerm_resource_grouptg" {
 #   name = local.resource_group_name
 #   //"Assetronai-dev-101-rg-108"
 #   // name = "assetronai-dev-100" //qa
+#   location = local.resource_group_location
 # }
 
 # // appusing-securing-adb2c
@@ -190,4 +200,13 @@ module "securing_adb2c_custom_adb2c" {
   country_code            = local.resource_group_location_country_code
   data_residency_location = local.resource_group_data_residency_location
   resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+}
+
+# // appusing-securing-adb2c
+module "securing_adb2c_custom_adb2c_multires" {
+  source                  = "./modules/adb2c_custom/adb2c_multires" // Add version after registry
+  resource_group_name_multireg = "${var.resource_group_name_multireg}"
+  resource_group_backup_multireg_locations = "${var.resource_group_backup_multireg_locations}"
+  resource_group_backup_multireg_locations_country_code = "${var.resource_group_backup_multireg_locations_country_code}"
+  resource_group_backup_multireg_locations_data_residency_location = "${var.resource_group_backup_multireg_locations_data_residency_location}"
 }

@@ -75,6 +75,29 @@ variable "resource_group_data_residency_location" {
   default     = "United States"
 }
 
+variable "resource_group_backup_multireg_locations" {
+  type        = list
+  description = "(Required) Update to force a change."
+  default     = ["East US", "West Europe", "Southeast Asia"]
+}
+
+variable "resource_group_backup_multireg_locations_country_code" {
+  type        = list
+  description = "(Required) Update to force a change."
+  default     = ["US","US","US"]
+}
+
+variable "resource_group_backup_multireg_locations_data_residency_location" {
+  type        = list
+  description = "(Required) Update to force a change."
+  default     = ["US","US","US"]
+}
+
+variable "resource_group_name_multireg" {
+  type        = string
+  description = ""
+}
+
 variable "state_resource_group_name" {
   type        = string
   description = "(Required) Update to force a change."
@@ -106,8 +129,16 @@ variable "state_file_name" {
 }
 
 locals {
+  project_prefix         = "${var.project_prefix}"
+  resource_group_prefix  = "${var.resource_group_prefix}"
+  environment            = "${var.environment}"
+  environment_version    = "${var.environment_version}"
+  resource_group_name_multireg    = "${var.project_prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}"
   resource_group_name    = "${var.project_prefix}-${var.environment}-${var.environment_version}-${var.resource_group_prefix}-${var.resource_group_version}"
-  resource_group_location = "${var.resource_group_location}"
+  resource_group_location = "${var.resource_group_location}"  
   resource_group_location_country_code = "${var.resource_group_location_country_code}"
   resource_group_data_residency_location = "${var.resource_group_data_residency_location}"
+  resource_group_backup_multireg_locations = "${var.resource_group_backup_multireg_locations}"
+  resource_group_backup_multireg_locations_country_code = "${var.resource_group_backup_multireg_locations_country_code}"
+  resource_group_backup_multireg_locations_data_residency_location = "${var.resource_group_backup_multireg_locations_data_residency_location}"
 }
