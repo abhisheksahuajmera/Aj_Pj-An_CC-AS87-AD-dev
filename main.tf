@@ -4,20 +4,26 @@
 #   location = local.resource_group_location
 # }
 
+# data "azurerm_resource_group" "azurerm_resource_grouptg" {
+#   name = local.resource_group_name
+#   //"Assetronai-dev-101-rg-108"
+#   // name = "assetronai-dev-100" //qa
+# }
+
+# // appusing-securing-adb2c
+# module "securing_adb2c" {
+#   source                  = "./modules/adb2c" // Add version after registry
+#   country_code            = local.resource_group_location_country_code
+#   data_residency_location = local.resource_group_data_residency_location
+#   resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+# }
+
+
 data "azurerm_resource_group" "azurerm_resource_grouptg" {
   name = local.resource_group_name
   //"Assetronai-dev-101-rg-108"
   // name = "assetronai-dev-100" //qa
 }
-
-# // appusing-securing-adb2c
-module "securing_adb2c" {
-  source                  = "./modules/adb2c" // Add version after registry
-  country_code            = local.resource_group_location_country_code
-  data_residency_location = local.resource_group_data_residency_location
-  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
-}
-
 # // appusing-storing-storage_account
 # module "securing_saaccount" {
 #   source                  = "./modules/storage_account" // Add version after registry
@@ -176,3 +182,12 @@ module "securing_adb2c" {
 #   virtual_network_name      = "${module.networking_hubspoke_spoke_dev_vnet.virtual_network_nameop}"
 #   remote_virtual_network_id = "${module.networking_hubspoke_hub_vnet.idop}"
 # }
+
+
+# // appusing-securing-adb2c
+module "securing_adb2c_custom_adb2c" {
+  source                  = "./modules/adb2c_custom/adb2c" // Add version after registry
+  country_code            = local.resource_group_location_country_code
+  data_residency_location = local.resource_group_data_residency_location
+  resource_group_name     = data.azurerm_resource_group.azurerm_resource_grouptg.name
+}
