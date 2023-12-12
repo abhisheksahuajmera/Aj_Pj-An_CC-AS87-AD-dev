@@ -1,4 +1,4 @@
-resource "azurerm_aadb2c_directory" "azurerm_aadb2c_directorytg" {
+resource "azurerm_aadb2c_directory" "azurerm_aadb2c_directorytg2" {
   country_code            = "${var.country_code}"
   data_residency_location = "${var.data_residency_location}"
   display_name            = local.display_name

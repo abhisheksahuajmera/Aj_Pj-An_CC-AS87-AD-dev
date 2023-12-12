@@ -16,6 +16,12 @@ variable "project_prefix" {
   default     = "Assetronai"
 }
 
+variable "project_github_pattoken" {
+  type        = string
+  description = "project_github_pattoken"
+}
+
+
 variable "project_version" {
   type        = string
   description = "project_version"
